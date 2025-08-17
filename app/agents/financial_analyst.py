@@ -20,7 +20,7 @@ llm = ChatGroq(
 # performance and stability.
 
 financial_analyst_agent = Agent(
-    role="Senior Financial Analyst",
+    role="Senior Financial Analyst", # pyright: ignore[reportCallIssue]
     goal=(
         "Analyze a company's financial data to provide a clear overview of its "
         "financial health, valuation, and key performance indicators. "

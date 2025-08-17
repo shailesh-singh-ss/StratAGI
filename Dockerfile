@@ -12,9 +12,9 @@ LABEL project="StratAGI"
 WORKDIR /app
 
 # Prevents Python from writing pyc files to disc (improves performance in containers)
-ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE=1
 # Prevents Python from buffering stdout and stderr (makes logs appear in real-time)
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 # --- System Dependencies ---
 # Update package lists and install necessary build tools and git.
@@ -25,16 +25,17 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # --- Python Dependencies ---
-# Copy the requirements file first to leverage Docker's layer caching.
-# If requirements.txt doesn't change, this layer won't be re-built.
-COPY requirements.txt .
+# Install uv
+RUN pip install uv
 
-# Install the Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Copy dependency files
+COPY pyproject.toml ./
+COPY uv.lock ./
 
-# --- Application Code ---
-# Copy the rest of the application source code into the container
+# Install Python dependencies
+RUN uv sync --frozen
+
+# Copy application code
 COPY . .
 
 # --- Permissions ---

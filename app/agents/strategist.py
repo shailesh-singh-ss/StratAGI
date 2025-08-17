@@ -18,7 +18,7 @@ llm = ChatGroq(
 # This agent synthesizes the findings from other agents into a final report.
 
 strategist_agent = Agent(
-    role="Senior Business Strategist",
+    role="Senior Business Strategist", # type: ignore
     goal=(
         "Synthesize the market research and financial analysis into a comprehensive "
         "strategic report. Your report must include a SWOT analysis (Strengths, Weaknesses, "

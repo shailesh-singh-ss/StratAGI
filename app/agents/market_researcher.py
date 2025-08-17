@@ -26,7 +26,7 @@ llm_google = LLM(
 # information from the web.
 
 market_researcher_agent = Agent(
-    role="Expert Market Researcher",
+    role="Expert Market Researcher", # type: ignore
     goal=(
         "Find and analyze the latest market trends, news, and competitive landscape "
         "for a given company and its industry. Provide a concise summary of key findings."
